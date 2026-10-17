@@ -1,0 +1,6 @@
+<button class="go-back-btn" (click)="goBack()">⏮️</button>
+@for(route of otherRoutes(); track route.path) {
+    <a [routerLink]="['/', i18n.lang(), route.path]">
+        {{ route.labelKey | t }}
+    </a>
+}

@@ -1,0 +1,30 @@
+<footer class="footer">
+    <div class="footer__inner">
+        <section class="footer__brand">
+            <strong>{{ name }}</strong>
+            <p>{{ 'footer.tagline' | t }}</p>
+        </section>
+
+        <nav class="footer__links" aria-label="Social">
+            @for (l of links; track l.label) {
+                <a [href]="l.url" target="_blank" rel="noopener noreferrer">
+                    {{ l.label }} <span aria-hidden="true">↗</span>
+                </a>
+            }
+        </nav>
+
+        <section class="footer__meta">
+            <a [href]="repoURL" target="_blank" rel="noopener noreferrer">
+                {{ 'footer.codice' | t }} <span aria-hidden="true">↗</span>
+            </a>
+            <p>{{ 'footer.stack' | t }}</p>
+        </section>
+    </div>
+
+    <div class="footer__bottom">
+        <small>© {{ year }} {{ name }} · {{ 'footer.diritti' | t }}</small>
+        <button type="button" class="footer__top" (click)="scrollTop()">
+            {{ 'footer.suInCima' | t }} <span aria-hidden="true">↑</span>
+        </button>
+    </div>
+</footer>
