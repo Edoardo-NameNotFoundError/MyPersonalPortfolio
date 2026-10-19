@@ -1,0 +1,15 @@
+title = "Regole custom per anonimizzazione portfolio"
+
+[allowlist]
+description = "Ignora file di configurazione dove questi dati servono o sono generici"
+paths = [
+  '''package\.json''',
+  '''package-lock\.json''',
+  '''\.github/workflows/deploy\.yml'''
+]
+
+[[rules]]
+id = "dati-personali-portfolio"
+description = "Blocca l'azienda e QUALSIASI indirizzo email"
+regex = '''(?i)(extravega|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})'''
+tags = ["anonymization", "privacy"]

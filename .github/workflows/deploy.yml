@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: ["main"] # Parte in automatico ogni volta che si pusha sul main
+    branches: ["main"] # Parte in automatico a ogni push del main
 
 permissions:
   contents: read
@@ -31,6 +31,21 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      # --- SEZIONE CONTROLLI QUALITÀ E SICUREZZA ---
+
+      - name: Gitleaks (Secret Scanner)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Linting
+        run: npm run lint
+
+      - name: Run Tests
+        run: npm run test:ci
+
+      # --- SEZIONE BUILD E DEPLOY ---
 
       - name: Build project
         run: npm run build
