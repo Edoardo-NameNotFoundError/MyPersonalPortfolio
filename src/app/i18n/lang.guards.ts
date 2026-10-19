@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { CanActivateFn, CanMatchFn, Router } from '@angular/router';
+import { CanMatchFn } from '@angular/router';
 import { LanguageService } from './language.service';
 
 export const langMatch: CanMatchFn = (_route, segments) => {

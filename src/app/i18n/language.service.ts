@@ -46,7 +46,7 @@ export class LanguageService {
   }
 
   t(key: string): string {
-        const value = key.split('.').reduce<any>((node, part) => node?.[part], this.dictionary());
+        const value = key.split('.').reduce<unknown>((node, part) => node?.[part], this.dictionary());
         return typeof value === 'string' ? value : key;
   }
 

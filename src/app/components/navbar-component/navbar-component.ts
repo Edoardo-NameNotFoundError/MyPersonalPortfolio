@@ -51,7 +51,7 @@ export class NavbarComponent {
       .map(route => this.mapToNavLink(route));
   }
 
-  private isValidRoute(route: Route): Boolean {
+  private isValidRoute(route: Route): boolean {
     const hasPath = typeof route.path === 'string';
     const isVisibleFromMenu = route.data?.['showInMenu'] === true;
     const hasLabel = typeof route.data?.['labelKey'] === 'string';

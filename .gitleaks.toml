@@ -11,5 +11,5 @@ paths = [
 [[rules]]
 id = "dati-personali-portfolio"
 description = "Blocca l'azienda e QUALSIASI indirizzo email"
-regex = '''(?i)(extravega|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})'''
+regex = '''(?i)([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})'''
 tags = ["anonymization", "privacy"]
