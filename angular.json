@@ -70,13 +70,15 @@
           "defaultConfiguration": "development"
         },
         "test": {
-          "builder": "@angular/build:unit-test"
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "tsconfig.spec.json"
+          }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"],
-            "tsConfig": "tsconfig.spec.json"
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }
