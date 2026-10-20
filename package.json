@@ -7,7 +7,7 @@
     "build": "ng build",
     "postbuild": "cp dist/MyPersonalPortfolioApp/browser/index.html dist/MyPersonalPortfolioApp/browser/404.html",
     "test": "ng test",
-    "test:ci": "ng test --watch=false --pass-with-no-tests", 
+    "test:ci": "ng test --watch=false", 
     "lint": "ng lint" 
   },
   "private": true,
