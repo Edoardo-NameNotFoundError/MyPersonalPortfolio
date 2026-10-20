@@ -42,18 +42,18 @@ export class LanguageService {
   }
 
   pick<T>(field: Record<Lang, T>): T {
-        return field[this._lang()];
+    return field[this._lang()];
   }
 
   t(key: string): string {
-        const value = key.split('.').reduce<unknown>((node, part) => node?.[part], this.dictionary());
-        return typeof value === 'string' ? value : key;
+    const value = key.split('.').reduce<unknown>((node, part) => (node as Record<string, unknown>)?.[part], this.dictionary());
+    return typeof value === 'string' ? value : key;
   }
 
   set(lang: Lang): void {
-        this._lang.set(lang);
-        document.documentElement.lang = lang;
-        try { localStorage.setItem(STORAGE_KEY, lang); } catch { /* storage non disponibile */ }
+    this._lang.set(lang);
+    document.documentElement.lang = lang;
+    try { localStorage.setItem(STORAGE_KEY, lang); } catch { /* storage non disponibile */ }
   }
 
 }
