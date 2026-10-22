@@ -1,1 +1,35 @@
-<p>progetti-component works!</p>
+<section class="projects-grid">
+  
+  @for (project of projectsArray; track project.id) {
+      
+    <article class="project-card">
+      
+      <h2>{{ getText(project.title) }}</h2>
+      
+      <span class="badge-size">{{ getProjectLabel('size') }}: {{ project.size }}</span>
+
+      <div class="content">
+        <h3>{{ getProjectLabel('problem') }}</h3>
+        <p>{{ getText(project.problem) }}</p>
+
+        <h3>Soluzione</h3>
+        <p>{{ getText(project.solution)}}</p>
+
+        
+        <h3>{{ getProjectLabel('description') }}</h3>
+        <p>{{ getText(project.description) }}</p>
+      </div>
+
+      <div class="tech-stack">
+        @for (tech of project.technologies; track tech) {
+          <span class="tech-tag">{{ tech }}</span>
+        }
+      </div>
+
+    </article>
+
+  } @empty {
+    <p>Nessun progetto disponibile al momento.</p>
+  }
+  
+</section>

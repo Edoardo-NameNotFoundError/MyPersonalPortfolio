@@ -14,7 +14,7 @@ export const en: Dictionary = {
         home: 'Home', 
         chiSono: 'About me', 
         progetti: 'My projects', 
-        contatti: 'Contact',
+        contatti: 'Contact me',
         indietro: 'Back' 
     },
 
@@ -35,4 +35,14 @@ export const en: Dictionary = {
         diritti: 'All rights reserved',
         suInCima: 'Back to top'
     },
+
+    projects: {
+        labels: {
+        size: 'Size',
+        problem: 'The Problem',
+        solution: 'The Solution',
+        description: 'Description',
+        technologies: 'Tech Stack'
+        }
+    }
 };

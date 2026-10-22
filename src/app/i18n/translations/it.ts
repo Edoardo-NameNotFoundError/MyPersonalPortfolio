@@ -33,6 +33,16 @@ export const it = {
         diritti: 'Tutti i diritti riservati',
         suInCima: 'Torna su'
     },
+
+    projects: {
+        labels: {
+            size: 'Dimensione',
+            problem: 'Il Problema',
+            solution: 'La Soluzione',
+            description: 'Descrizione',
+            technologies: 'Tecnologie utilizzate'
+        }
+    }
 };
 
 export type Dictionary = typeof it;
