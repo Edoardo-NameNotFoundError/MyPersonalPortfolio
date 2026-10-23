@@ -26,6 +26,9 @@
         }
       </div>
 
+      <a [routerLink]="['/', langService.lang(), 'progetti', project.id]" class="detail-btn">
+        {{ getProjectLabel('showDetails') }}
+      </a>
     </article>
 
   } @empty {

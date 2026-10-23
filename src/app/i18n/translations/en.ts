@@ -42,7 +42,19 @@ export const en: Dictionary = {
         problem: 'The Problem',
         solution: 'The Solution',
         description: 'Description',
-        technologies: 'Tech Stack'
+        technologies: 'Tech Stack',
+        showDetails: 'Show Details',
+        back: 'Back to projects'
         }
+    },
+
+    notFoundPage: {
+        title: 'Error',
+        description: 'Command not found. The requested page might have been deleted, moved, or simply doesn\'t exist in this timeline.',
+        prompt: 'Please try to ',
+        goBack: 'go back',
+        or: ' or ',
+        goHome: 'return to the root (homepage)',
+        goodLuck: 'End of line. Good luck.'
     }
 };

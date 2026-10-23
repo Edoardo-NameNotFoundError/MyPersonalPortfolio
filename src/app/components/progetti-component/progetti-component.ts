@@ -3,11 +3,12 @@ import { Component, inject } from '@angular/core';
 import { PROJECTS } from '../../assets/project.data';
 import { LanguageService } from '../../i18n/language.service';
 import { LocalizedString } from '../../../models/project.interface';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-progetti-component',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './progetti-component.html',
   styleUrl: './progetti-component.scss',
 })

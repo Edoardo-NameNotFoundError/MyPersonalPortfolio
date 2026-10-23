@@ -40,8 +40,20 @@ export const it = {
             problem: 'Il Problema',
             solution: 'La Soluzione',
             description: 'Descrizione',
-            technologies: 'Tecnologie utilizzate'
+            technologies: 'Tecnologie utilizzate',
+            showDetails: 'Vedi i dettagli',
+            back: 'Torna ai progetti'
         }
+    },
+
+    notFoundPage: {
+        title: 'Errore',
+        description: 'Comando non trovato. La pagina richiesta è stata rimossa, rinominata o non è mai esistita in questa linea temporale.',
+        prompt: 'Esegui il comando per ',
+        goBack: 'tornare indietro',
+        or: ' oppure ',
+        goHome: 'tornare alla root (homepage)',
+        goodLuck: 'Fine delle trasmissioni. Buona fortuna.'
     }
 };
 

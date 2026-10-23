@@ -1,1 +1,20 @@
-<p>not-found-component works!</p>
+<div class="noise"></div>
+<div class="overlay"></div>
+<div class="terminal">
+    <!-- TITOLO -->
+    <h1>{{ i18n.t('notFoundPage.title') }} <span class="errorcode">404</span></h1>
+    
+    <!-- DESCRIZIONE -->
+    <p class="output">{{ i18n.t('notFoundPage.description') }}</p>
+    
+    <!-- AZIONI CON I LINK IN MEZZO -->
+    <p class="output">
+      {{ i18n.t('notFoundPage.prompt') }}
+      <a href="javascript:history.back()">{{ i18n.t('notFoundPage.goBack') }}</a> 
+      {{ i18n.t('notFoundPage.or') }} 
+      <a [routerLink]="['/', i18n.lang(), 'home']">{{ i18n.t('notFoundPage.goHome') }}</a>.
+    </p>
+    
+    <!-- SALUTO FINALE -->
+    <p class="output">{{ i18n.t('notFoundPage.goodLuck') }}</p>
+</div>

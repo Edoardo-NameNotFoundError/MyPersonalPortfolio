@@ -36,7 +36,7 @@ export const routes: Routes = [
             },
             {
                 path: 'progetti/:slug', title: title('title.dettaglio'),
-                loadComponent: () => import('./components/progetto-dettaglio-component/progetto-dettaglio-component').then(m => m.ProgettoDettaglioComponent)
+                loadComponent: () => import('./components/progetto-dettaglio.component/progetto-dettaglio.component').then(m => m.ProgettoDettaglioComponent)
             },
             {
                 path: 'contatti', title: title('title.contatti'),

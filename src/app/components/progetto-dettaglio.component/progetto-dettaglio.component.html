@@ -1,0 +1,53 @@
+@if(project(); as p) {
+    <article class="detail-container">
+    
+    <!-- Pulsante Indietro nativo per la SPA -->
+    <a [routerLink]="['/', i18n.lang(), 'progetti']" class="back-btn">
+      &larr; {{ i18n.t('projects.labels.back') || 'Indietro' }}
+    </a>
+
+    <header>
+      <h1>{{ getText(p.title) }}</h1>
+      
+      <div class="tech-stack">
+        @for (tech of p.technologies; track tech) {
+          <span class="tech-badge">{{ tech }}</span>
+        }
+      </div>
+    </header>
+
+    <section class="story">
+
+      <!-- PROBLEMA -->
+      <h2>{{ i18n.t('projects.labels.problem') }}</h2>
+      <p>{{ p.problem[i18n.lang()] }}</p>
+
+      <!-- SOLUZIONE / SCELTE -->
+      <h2>{{ i18n.t('projects.labels.solution') }}</h2>
+      <p>{{ p.solution[i18n.lang()] }}</p>
+
+      <!-- DESCRIZIONE / RISULTATO -->
+      <h2>{{ i18n.t('projects.labels.description') }}</h2>
+      <p>{{ p.description[i18n.lang()] }}</p>
+    </section>
+
+    <!-- LINK ESTERNI -->
+    <footer class="project-links">
+      @if (p.githubUrl) {
+        <a [href]="p.githubUrl" target="_blank" rel="noopener noreferrer" class="link-btn github">
+          GitHub Repo
+        </a>
+      }
+      
+      @if (p.liveUrl) {
+        <a [href]="p.liveUrl" target="_blank" rel="noopener noreferrer" class="link-btn demo">
+          Live Demo
+        </a>
+      }
+      
+    </footer>
+  </article>
+
+} @else {
+    <app-not-found-component></app-not-found-component>
+}
