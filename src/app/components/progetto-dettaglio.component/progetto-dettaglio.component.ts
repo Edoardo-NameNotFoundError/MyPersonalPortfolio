@@ -3,22 +3,25 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 
-import { LanguageService } from '../../i18n/language.service';
 import { PROJECTS } from '../../assets/project.data';
-import { LocalizedString } from '../../../models/project.interface';
+
+import { LanguageService } from '../../i18n/language.service';
+import { TPipe } from '../../i18n/t.pipe';
+import { LPipe } from '../../i18n/l.pipe';
 
 import { NotFoundComponent } from '../not-found-component/not-found-component';
+
 
 @Component({
   selector: 'app-progetto-dettaglio.component',
   standalone: true,
-  imports: [RouterModule, NotFoundComponent],
+  imports: [RouterModule, NotFoundComponent, TPipe, LPipe],
   templateUrl: './progetto-dettaglio.component.html',
   styleUrl: './progetto-dettaglio.component.scss',
 })
 export class ProgettoDettaglioComponent {
-  i18n = inject(LanguageService);
   private route = inject(ActivatedRoute);
+  readonly i18n = inject(LanguageService);
 
   private currentSlug = toSignal(
     this.route.paramMap.pipe(map(params => params.get('slug')))
@@ -28,10 +31,4 @@ export class ProgettoDettaglioComponent {
     const slug = this.currentSlug();
     return PROJECTS.find(proj => proj.id === slug);
   });
-
-  getText(value: string | LocalizedString | undefined): string {
-    if(!value) return '';
-    if(typeof value === 'string') return value;
-    return value[this.i18n.lang()];
-  }
 }

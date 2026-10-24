@@ -5,6 +5,7 @@ export type LocalizedString = Record<Lang, string>;
 export interface Project {
     id: string,
     showInHome: boolean,
+    abstract: LocalizedString | string,
     priority: 1 | 2 | 3 | 4 | 5,
     size: 'S' | 'M' | 'L',
     title: LocalizedString | string,

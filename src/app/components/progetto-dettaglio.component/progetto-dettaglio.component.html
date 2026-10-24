@@ -7,7 +7,7 @@
     </a>
 
     <header>
-      <h1>{{ getText(p.title) }}</h1>
+      <h1>{{ p.title | l}}</h1>
       
       <div class="tech-stack">
         @for (tech of p.technologies; track tech) {
@@ -19,16 +19,16 @@
     <section class="story">
 
       <!-- PROBLEMA -->
-      <h2>{{ i18n.t('projects.labels.problem') }}</h2>
-      <p>{{ p.problem[i18n.lang()] }}</p>
+      <h2>{{ 'projects.labels.problem' | t }}</h2>
+      <p>{{ p.problem | l}}</p>
 
       <!-- SOLUZIONE / SCELTE -->
-      <h2>{{ i18n.t('projects.labels.solution') }}</h2>
-      <p>{{ p.solution[i18n.lang()] }}</p>
+      <h2>{{ 'projects.labels.solution' | t }}</h2>
+      <p>{{ p.solution | l}}</p>
 
       <!-- DESCRIZIONE / RISULTATO -->
-      <h2>{{ i18n.t('projects.labels.description') }}</h2>
-      <p>{{ p.description[i18n.lang()] }}</p>
+      <h2>{{ 'projects.labels.description' | t }}</h2>
+      <p>{{ p.description | l}}</p>
     </section>
 
     <!-- LINK ESTERNI -->

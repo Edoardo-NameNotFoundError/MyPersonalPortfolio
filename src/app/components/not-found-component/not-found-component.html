@@ -2,19 +2,19 @@
 <div class="overlay"></div>
 <div class="terminal">
     <!-- TITOLO -->
-    <h1>{{ i18n.t('notFoundPage.title') }} <span class="errorcode">404</span></h1>
+    <h1>{{'notFoundPage.title' | t }} <span class="errorcode">404</span></h1>
     
     <!-- DESCRIZIONE -->
-    <p class="output">{{ i18n.t('notFoundPage.description') }}</p>
+    <p class="output">{{ 'notFoundPage.description' | t }}</p>
     
     <!-- AZIONI CON I LINK IN MEZZO -->
     <p class="output">
-      {{ i18n.t('notFoundPage.prompt') }}
-      <a href="javascript:history.back()">{{ i18n.t('notFoundPage.goBack') }}</a> 
-      {{ i18n.t('notFoundPage.or') }} 
-      <a [routerLink]="['/', i18n.lang(), 'home']">{{ i18n.t('notFoundPage.goHome') }}</a>.
+      {{ 'notFoundPage.prompt' | t }}
+      <a href="javascript:history.back()">{{ 'notFoundPage.goBack' | t }}</a> 
+      {{ 'notFoundPage.or' | t }} 
+      <a [routerLink]="['/', i18n.lang(), 'home']">{{ 'notFoundPage.goHome' | t }}</a>.
     </p>
     
     <!-- SALUTO FINALE -->
-    <p class="output">{{ i18n.t('notFoundPage.goodLuck') }}</p>
+    <p class="output">{{ 'notFoundPage.goodLuck' | t }}</p>
 </div>

@@ -4,20 +4,13 @@
       
     <article class="project-card">
       
-      <h2>{{ getText(project.title) }}</h2>
+      <h2>{{ project.title | l }}</h2>
       
-      <span class="badge-size">{{ getProjectLabel('size') }}: {{ project.size }}</span>
+      <span class="badge-size">{{ 'projects.labels.size' | t}}: {{ project.size }}</span>
 
       <div class="content">
-        <h3>{{ getProjectLabel('problem') }}</h3>
-        <p>{{ getText(project.problem) }}</p>
-
-        <h3>Soluzione</h3>
-        <p>{{ getText(project.solution)}}</p>
-
-        
-        <h3>{{ getProjectLabel('description') }}</h3>
-        <p>{{ getText(project.description) }}</p>
+        <h3>Abstract</h3>
+        <p>{{ project.abstract | l }}</p>
       </div>
 
       <div class="tech-stack">
@@ -26,8 +19,8 @@
         }
       </div>
 
-      <a [routerLink]="['/', langService.lang(), 'progetti', project.id]" class="detail-btn">
-        {{ getProjectLabel('showDetails') }}
+      <a [routerLink]="['/', i18n.lang(), 'progetti', project.id]" class="detail-btn">
+        {{ 'projects.labels.showDetails' | t}}
       </a>
     </article>
 

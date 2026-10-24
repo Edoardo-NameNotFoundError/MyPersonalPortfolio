@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 
+import { PROJECTS } from '../../assets/project.data';
+
 import { TPipe } from '../../i18n/t.pipe';
 import { LanguageService } from '../../i18n/language.service';
-
-import { PROJECTS } from '../../assets/project.data';
 
 import { ProgettiComponent } from '../progetti-component/progetti-component';
 
@@ -17,6 +17,6 @@ import { ProgettiComponent } from '../progetti-component/progetti-component';
 
 export class HomeComponent {
   protected readonly i18n = inject(LanguageService);
-  projects = PROJECTS;
-  homeProjects = PROJECTS.filter(p => p.showInHome === true);
+  filteredProjects = PROJECTS.filter(p => p.showInHome === true); 
+  homeProjects = [...this.filteredProjects].sort((a, b) => b.priority - a.priority);
 }
