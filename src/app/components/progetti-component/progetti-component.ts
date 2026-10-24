@@ -1,6 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 
 import { PROJECTS } from '../../assets/project.data';
+import { Project } from '../../../models/project.interface';
+
 import { LanguageService } from '../../i18n/language.service';
 import { LocalizedString } from '../../../models/project.interface';
 import { RouterLink } from '@angular/router';
@@ -13,7 +15,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './progetti-component.scss',
 })
 export class ProgettiComponent {
-  readonly projectsArray = PROJECTS;
+  projectsArray = input<Project[]>(PROJECTS);
   readonly langService = inject(LanguageService);
 
   getText(value: string | LocalizedString): string {

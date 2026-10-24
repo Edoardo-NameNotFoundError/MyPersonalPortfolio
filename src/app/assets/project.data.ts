@@ -3,6 +3,8 @@ import { Project } from "../../models/project.interface";
 export const PROJECTS: Project[] = [
   {
     id: 'banca-italia-converter',
+    showInHome: true,
+    priority: 4,
     title: {
       it: "Convertitore Valute Banca d'Italia",
       en: "Bank of Italy Exchange Rate Converter"

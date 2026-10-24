@@ -1,1 +1,6 @@
 <h1>{{ 'home.titolo' | t }}</h1>
+
+@if(homeProjects.length > 0) {
+    <h2>{{ 'home.progettiInEvidenza' | t}}</h2>
+    <app-progetti-component [projectsArray]="homeProjects"></app-progetti-component>
+}

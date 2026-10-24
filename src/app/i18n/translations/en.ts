@@ -20,6 +20,7 @@ export const en: Dictionary = {
 
     home:  { 
         titolo: "This will be my landing page", 
+        progettiInEvidenza: "Top projects"
     },
 
     chiSono : {

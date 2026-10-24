@@ -17,7 +17,8 @@ export const it = {
     },
 
     home:  { 
-        titolo: 'Questa sarà la mia landing page', 
+        titolo: 'Questa sarà la mia landing page',
+        progettiInEvidenza: 'Progetti in evidenza'
     },
 
     chiSono : {
