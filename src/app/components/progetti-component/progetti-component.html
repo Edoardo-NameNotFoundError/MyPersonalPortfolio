@@ -1,10 +1,38 @@
 <section class="projects-grid">
+
+  <div class="filter-class">
+    <input type="checkbox" [checked]="showOnlyLive()" (change)="toggleShowLive($event)" id="show-only-live">
+    <label for="show-only-live">{{ 'projects.filters.mostraLive' | t }}</label>
+
+    <div class="size-filter">
+      <label for="size-select">{{ 'projects.filters.dimensione' | t }}</label>
+      
+      <select 
+        id="size-select" 
+        [value]="selectedSize()" 
+        (change)="onSizeChange($event)"
+        class="filter-select">
+        
+        @for(size of availableSizes(); track size) {
+          <option [value]="size">{{ size }}</option>
+        }
+        
+      </select>
+    </div>
+  </div>
   
-  @for (project of projectsArray(); track project.id) {
+  @for (project of filteredProjects(); track project.id) {
       
     <article class="project-card">
       
       <h2>{{ project.title | l }}</h2>
+
+      @if(project.liveUrl) {
+        <div class="live-indicator">
+          <span class="live-dot"></span>
+          <span class="live-text">{{ 'projects.labels.demoDisponibile' | t }}</span>
+        </div>
+      }
       
       <span class="badge-size">{{ 'projects.labels.size' | t}}: {{ project.size }}</span>
 

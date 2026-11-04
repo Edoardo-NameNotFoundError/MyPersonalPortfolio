@@ -39,14 +39,21 @@ export const en: Dictionary = {
 
     projects: {
         labels: {
-        size: 'Size',
-        problem: 'The Problem',
-        solution: 'The Solution',
-        description: 'Description',
-        technologies: 'Tech Stack',
-        showDetails: 'Show Details',
-        back: 'Back to projects'
+            size: 'Size',
+            problem: 'The Problem',
+            solution: 'The Solution',
+            description: 'Description',
+            technologies: 'Tech Stack',
+            showDetails: 'Show Details',
+            back: 'Back to projects',
+            demoDisponibile: 'Live-Demo available!'
+        },
+
+        filters: {
+            mostraLive: 'Live-Demo',
+            dimensione: 'Select Project Size'
         }
+
     },
 
     notFoundPage: {

@@ -1,0 +1,45 @@
+$live-color: #ef4444; 
+
+.live-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem 0.35rem 0.5rem;
+  
+  background-color: rgba($live-color, 0.1);
+  border: 1px solid rgba($live-color, 0.2);
+  border-radius: 9999px;
+  
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: lighten($live-color, 15%);
+}
+
+.live-dot {
+  position: relative;
+  display: block;
+  width: 10px;
+  height: 10px;
+  background-color: $live-color;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba($live-color, 0.6);
+
+  // L'onda radar
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0; 
+    border-radius: inherit;
+    background-color: inherit;
+    z-index: -1;
+    animation: modern-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+}
+
+@keyframes modern-ping {
+  75%, 100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}

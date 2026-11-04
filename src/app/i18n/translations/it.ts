@@ -43,7 +43,12 @@ export const it = {
             description: 'Descrizione',
             technologies: 'Tecnologie utilizzate',
             showDetails: 'Vedi i dettagli',
-            back: 'Torna ai progetti'
+            back: 'Torna ai progetti',
+            demoDisponibile: 'Live-Demo disponibile!'
+        },
+        filters: {
+            mostraLive: 'Live-Demo',
+            dimensione: 'Dimensione del progetto'
         }
     },
 

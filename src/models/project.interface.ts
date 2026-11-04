@@ -15,5 +15,5 @@ export interface Project {
     technologies: string[],
     imageUrl?: string,
     githubUrl?: string,
-    liveUrl?: string    
+    liveUrl?: string 
 }
