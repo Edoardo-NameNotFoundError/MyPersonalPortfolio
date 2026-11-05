@@ -9,7 +9,7 @@ const outputFile = path.join(__dirname, '../src/assets/project.data.ts');
 
 function buildProject() {
     console.log("Inizio impacchettamento dati dei progetti...")
-    
+
     const files = fs.readdirSync(contentDir).filter(f => f.endsWith('.md'));
     const projectsArray = []; 
 
@@ -71,7 +71,7 @@ function buildProject() {
     const pLength = projectsArray.length;
 
     if (pLength > 0) {
-        console.log(`✅ Generati con successo ${pLength} file di traduzione!`);
+        console.log(`✅ Impacchettati con successo ${pLength} progetti!`);
     } else {
         console.warn("⚠️ Attenzione: nessun file di progetto individuato/tradotto!");
     }
