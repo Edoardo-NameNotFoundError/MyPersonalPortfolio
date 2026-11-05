@@ -3,17 +3,21 @@ import { Lang } from "../app/i18n/language.service";
 export type LocalizedString = Record<Lang, string>;
 
 export interface Project {
-    id: string,
-    showInHome: boolean,
-    abstract: LocalizedString | string,
-    priority: 1 | 2 | 3 | 4 | 5,
-    size: 'S' | 'M' | 'L',
-    title: LocalizedString | string,
-    description: LocalizedString,
-    problem: LocalizedString,
-    solution: LocalizedString,
-    technologies: string[],
-    imageUrl?: string,
-    githubUrl?: string,
-    liveUrl?: string 
+  id: string;
+  showInHome: boolean;
+  priority: number;
+  size: 'S' | 'M' | 'L' | 'XL' | 'ALL';
+  technologies: string[];
+  
+  // URL e media (opzionali o stringhe vuote)
+  liveUrl: string;
+  githubUrl: string;
+  imageUrl: string;
+  
+  // Testi fissi (usati per le card nella Home o nelle grid)
+  title: LocalizedString;
+  abstract: LocalizedString;
+
+  // Campo universale generato dal Markdown
+  bodyHtml: LocalizedString; 
 }

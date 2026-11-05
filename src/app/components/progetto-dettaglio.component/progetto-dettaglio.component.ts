@@ -3,7 +3,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 
-import { PROJECTS } from '../../assets/project.data';
+import { PROJECTS } from '../../../assets/project.data';
 
 import { LanguageService } from '../../i18n/language.service';
 import { TPipe } from '../../i18n/t.pipe';

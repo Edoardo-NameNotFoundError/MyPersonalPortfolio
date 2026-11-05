@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 
-import { PROJECTS } from '../../assets/project.data';
+import { PROJECTS } from '../../../assets/project.data';
 
 import { TPipe } from '../../i18n/t.pipe';
 import { LanguageService } from '../../i18n/language.service';

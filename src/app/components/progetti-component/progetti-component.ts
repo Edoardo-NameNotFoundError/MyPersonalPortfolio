@@ -1,7 +1,7 @@
 import { Component, computed, inject, input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { PROJECTS } from '../../assets/project.data';
+import { PROJECTS } from '../../../assets/project.data';
 import { Project } from '../../../models/project.interface';
 
 import { LanguageService } from '../../i18n/language.service';
