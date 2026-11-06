@@ -10,6 +10,7 @@ export interface Project {
   technologies: string[];
   
   // URL e media (opzionali o stringhe vuote)
+  inPageDemo: boolean;
   liveUrl: string;
   githubUrl: string;
   imageUrl: string;

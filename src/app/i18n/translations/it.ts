@@ -28,7 +28,7 @@ export const it = {
     },
 
     footer: {
-        tagline: 'Sviluppatore frontend · Angular e TypeScript',
+        tagline: 'IT & Business Controller · Sviluppatore Full-Stack (Angular, Python, GAS) · Data Strategy',
         codice: 'Codice sorgente del sito',
         stack: 'Realizzato con Angular 21+',
         diritti: 'Tutti i diritti riservati',

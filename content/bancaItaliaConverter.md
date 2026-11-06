@@ -10,6 +10,7 @@ technologies:
   - "CustomTkinter"
 imageUrl: ""
 githubUrl: ""
+inPageDemo: true
 liveUrl: ""
 title_it: "Convertitore Valute Banca d'Italia"
 title_en: "Bank of Italy Exchange Rate Converter"

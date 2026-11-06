@@ -7,9 +7,11 @@ import { LanguageService } from '../../i18n/language.service';
 
 import { ProgettiComponent } from '../progetti-component/progetti-component';
 
+import { ExchangeRate } from '../../inPageProjects/exchange-rate/components/exchange-rate';
+
 @Component({
   selector: 'app-home-component',
-  imports: [TPipe, ProgettiComponent],
+  imports: [TPipe, ProgettiComponent, ExchangeRate],
   templateUrl: './home-component.html',
   styleUrl: './home-component.scss',
 })

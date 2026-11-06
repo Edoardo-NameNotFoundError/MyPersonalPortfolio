@@ -30,7 +30,7 @@ export const en: Dictionary = {
     },
 
     footer: {
-        tagline: 'Frontend developer · Angular and TypeScript',
+        tagline: 'IT & Business Controller · Full-Stack Developer (Angular, Python, GAS) · Data Strategy',
         codice: 'Source code of this site',
         stack: 'Built with Angular 21+',
         diritti: 'All rights reserved',

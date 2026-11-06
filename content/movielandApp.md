@@ -1,7 +1,7 @@
 ---
 id: "movieland-app"
-showInHome: true
-priority: 5
+showInHome: false
+priority: 4
 size: "L"
 technologies:
   - "Angular 17+"
@@ -13,6 +13,7 @@ technologies:
 imageUrl: ""
 githubUrl: ""
 liveUrl: "https://movieland-6f414.web.app"
+inPageDemo: false
 title_it: "Movieland - Tracking Film"
 title_en: "Movieland - Movie Tracker"
 abstract_it: "Una web app full-stack in stile Netflix per cercare film, scoprire dove guardarli in streaming e tenere traccia dei propri preferiti."

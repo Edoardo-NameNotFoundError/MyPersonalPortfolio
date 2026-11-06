@@ -15,7 +15,7 @@ export class FooterComponent {
   protected readonly repoURL = 'https://www.github.com';
 
   protected readonly links = [
-    { label: 'GitHub', url: 'https://github.com' },
+    { label: 'GitHub', url: 'https://github.com/Edoardo-NameNotFoundError' },
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in' }
   ];
 

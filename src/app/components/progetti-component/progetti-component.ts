@@ -1,5 +1,5 @@
 import { Component, computed, inject, input, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { PROJECTS } from '../../../assets/project.data';
 import { Project } from '../../../models/project.interface';
@@ -20,6 +20,8 @@ type FilterSize = Project['size'] | 'ALL';
 
 
 export class ProgettiComponent {
+  public router = inject(Router)
+
   selectedSize = signal<FilterSize>('ALL');
   showOnlyLive = signal<boolean>(false);
 
@@ -55,5 +57,9 @@ export class ProgettiComponent {
   onSizeChange(event: Event) {
     const selectedElement = event.target as HTMLSelectElement;
     this.selectedSize.set(selectedElement.value as FilterSize);
+  }
+
+  isInProject(): boolean {
+    return this.router.url.includes('/progetti');
   }
 }
