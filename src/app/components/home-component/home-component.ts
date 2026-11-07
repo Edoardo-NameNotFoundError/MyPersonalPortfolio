@@ -8,7 +8,7 @@ import { LanguageService } from '../../i18n/language.service';
 import { ProgettiComponent } from '../progetti-component/progetti-component';
 
 //Da rimuovere quando finiti i TEST preliminari
-import { ExchangeRate } from '../../inPageProjects/exchange-rate/components/exchange-rate';
+import { ExchangeRate } from '../../inPageProjects/exchange-rate/components/exchange-rate.component/exchange-rate';
 
 @Component({
   selector: 'app-home-component',

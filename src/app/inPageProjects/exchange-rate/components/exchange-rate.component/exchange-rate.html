@@ -1,0 +1,79 @@
+<div class="form-container">
+
+    <h2>Valuta di partenza</h2>
+    <app-currency-picker
+        [currencies]="currencies()"
+        [selectedCurrency]="startCurrency()"
+        (currencyChanged)="onCurrencySelected($event, 'start')"
+    >
+    </app-currency-picker>
+
+    <h2>Valuta di arrivo</h2>
+    <app-currency-picker
+        [currencies]="currencies()"
+        [selectedCurrency]="targetCurrency()"
+        (currencyChanged)="onCurrencySelected($event, 'target')"
+    >
+    </app-currency-picker>
+
+    <button
+        id="swap-button"
+        type="button"
+        (click)="switchCurrencies()"
+
+    >
+        🔄
+    </button>
+
+    <div class="input-group date-picker">
+        <label for="exchange-date">Data di Riferimento:</label>
+        <input
+            id="exchange-date"
+            type="date"
+            [value]="selectedDate()"
+            [max]="today"
+            (change)="onDateChange($event)"
+            class="native-datepicker"
+        >
+
+        <label for="input-field">Inserisci il numero da convertire:</label>
+        <input
+            id="input-field"
+            type="number"
+            min="0"
+            [value]="inputNumber() ?? ''"
+            (input)="onRateChange($event)"
+        >
+
+        <button
+            type="button"
+            class="calc-button"
+            [disabled]="!targetCurrency() || isLoading()"
+            (click)="fetchRate()"
+        >
+            {{ isLoading() ? 'Ricerca in corso' : 'Calcola' }}
+        </button>
+
+        <button
+            type="button",
+            class="delete-all"
+            (click)="clearAllFields()"
+        >
+            Cancella tutto
+        </button>
+
+        @if(errorMessage()) {
+            <div class="error-alert">
+                {{ errorMessage() }}
+            </div>
+        }@else if(appliedRate) {
+            <div class="result-cart">
+                <p>Tasso di cambio applicato: {{ appliedRate }}</p>
+                <p>Data effettiva del risultato: {{ effectiveDate }}</p>
+                @if(result !== null) {
+                    <p><b>{{ inputNumber() }} {{ startCurrency()?.isoCode }} = {{ result }} {{targetCurrency()?.isoCode}}</b></p>
+                }
+            </div>
+        }
+    </div>
+</div>
