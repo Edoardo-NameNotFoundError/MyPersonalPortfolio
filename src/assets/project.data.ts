@@ -15,7 +15,7 @@ export const PROJECTS: Project[] = [
             "REST API",
             "CustomTkinter"
         ],
-        "inPageDemo": true,
+        "inPageDemo": "app-exchange-rate",
         "liveUrl": "",
         "githubUrl": "",
         "imageUrl": "",
@@ -46,7 +46,7 @@ export const PROJECTS: Project[] = [
             "REST API / Auth",
             "Business Intelligence"
         ],
-        "inPageDemo": false,
+        "inPageDemo": "",
         "liveUrl": "",
         "githubUrl": "",
         "imageUrl": "",
@@ -78,7 +78,7 @@ export const PROJECTS: Project[] = [
             "html2pdf.js",
             "SCSS"
         ],
-        "inPageDemo": false,
+        "inPageDemo": "",
         "liveUrl": "",
         "githubUrl": "",
         "imageUrl": "",
@@ -110,7 +110,7 @@ export const PROJECTS: Project[] = [
             "SCSS",
             "Docker"
         ],
-        "inPageDemo": false,
+        "inPageDemo": "",
         "liveUrl": "https://movieland-6f414.web.app",
         "githubUrl": "",
         "imageUrl": "",
@@ -141,7 +141,7 @@ export const PROJECTS: Project[] = [
             "Bootstrap 5",
             "Serverless Architecture"
         ],
-        "inPageDemo": false,
+        "inPageDemo": "",
         "liveUrl": "",
         "githubUrl": "",
         "imageUrl": "",

@@ -31,7 +31,7 @@ function buildProject() {
             priority: data.priority || 0,
             size: data.size || 'M',
             technologies: data.technologies || [],
-            inPageDemo: data.inPageDemo || false,
+            inPageDemo: data.inPageDemo || '',
             liveUrl: data.liveUrl || '',
             githubUrl: data.githubUrl || '',
             imageUrl: data.imageUrl || '',

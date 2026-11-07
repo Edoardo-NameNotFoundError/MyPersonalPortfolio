@@ -12,7 +12,7 @@ technologies:
 imageUrl: ""
 githubUrl: ""
 liveUrl: ""
-inPageDemo: false
+inPageDemo: ""
 title_it: "Time Report Custom - Web App Serverless"
 title_en: "Custom Time Report - Serverless Web App"
 abstract_it: "Una Web App serverless sicura e dal design premium per tracciare le ore lavorative dei collaboratori, proteggendo i dati e senza impattare la contabilità ufficiale aziendale."

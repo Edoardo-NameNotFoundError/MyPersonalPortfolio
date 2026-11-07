@@ -11,7 +11,7 @@ technologies:
 - "Business Intelligence"
 imageUrl: ""
 githubUrl: ""
-inPageDemo: false
+inPageDemo: ""
 liveUrl: ""
 title_it: "Cost Allocation Engine - Full Costing B2B"
 title_en: "Cost Allocation Engine - B2B Full Costing"

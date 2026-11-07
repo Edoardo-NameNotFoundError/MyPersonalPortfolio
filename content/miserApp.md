@@ -13,7 +13,7 @@ technologies:
 imageUrl: ""
 githubUrl: ""
 liveUrl: ""
-inPageDemo: false
+inPageDemo: ""
 title_it: "MiSerApp - Gestione Presenze"
 title_en: "MiSerApp - Timesheet Management"
 abstract_it: "Una PWA white-label per la registrazione delle ore lavorative, con generazione automatica di fogli presenze in PDF e firma digitale."
