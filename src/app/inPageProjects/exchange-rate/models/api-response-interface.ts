@@ -8,9 +8,11 @@ export interface ApiResponse {
   rates: RateInfo[]
 }
 
+export interface CurrencyItem {
+  isoCode: string,
+  name: string
+}
+
 export interface ApiCurrencyResponse {
-    currencies : {
-        isoCode: string,
-        name: string
-    }[];
+    currencies : CurrencyItem[];
 }

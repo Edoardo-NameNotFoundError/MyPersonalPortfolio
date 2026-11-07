@@ -1,4 +1,13 @@
-import { Component, inject, signal } from '@angular/core';
+import { 
+  Component, 
+  ElementRef,
+  inject,
+  OnInit,
+  signal, 
+  computed,
+  HostListener 
+} from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -8,6 +17,7 @@ import {
   ApiResponse,
   RateInfo,
   ApiCurrencyResponse,
+  CurrencyItem,
 } from '../models/api-response-interface';
 
 
@@ -19,24 +29,63 @@ import {
   styleUrl: './exchange-rate.scss',
 })
 
-export class ExchangeRate {
+export class ExchangeRate implements OnInit {
   private http = inject(HttpClient);
+  private elementRef = inject(ElementRef);
 
-  currency = 'USD';
-  targetDate: string = new Date().toISOString().split('T')[0];
-  amount: number | null = null;
-
-  loading = signal<boolean>(false);
+  isOpen = signal<boolean>(false);
+  isLoading = signal<boolean>(false);
   errorMessage = signal<string>("");
+
+  currencies = signal<CurrencyItem[]>([]);
+  searchQuery = signal<string>('');
+  selectedCurrency = signal<CurrencyItem | null>(null);
+
   result : number | null = null;
   appliedRate : number | null = null;
   effectiveDate: string | null = null;
 
-  testApiCall() {
+  filteredCurrencies = computed(() => {
+    const query = this.searchQuery().trim().toLowerCase();
+    const list = this.currencies();
+
+    return list.filter(item => {
+      const safeIso = (item.isoCode || '').toLowerCase();
+      const safeName = (item.name || '').toLowerCase();
+
+      return safeIso.includes(query) || safeName.includes(query);
+    });
+  })
+
+  ngOnInit(): void {
     this.getAllCurrencies();
   }
+
+  @HostListener('document: click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    if(!this.elementRef.nativeElement.contains(event.target)) {
+      this.isOpen.set(false);
+    }
+  }
+
+  toggleDropdown(): void {
+    this.isOpen.update(current => !current);
+  }
+
+  onSearch(event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
+    this.searchQuery.set(value);
+  }
+
+  selectCurrency(item: CurrencyItem): void {
+    this.selectedCurrency.set(item);
+    this.isOpen.set(false);
+    this.searchQuery.set('');
+  }
   
-  private async getAllCurrencies() {
+  private async getAllCurrencies(): Promise<void>{
+    this.isLoading.set(true);
+
     const url = "https://tassidicambio.bancaditalia.it/terzevalute-wf-web/rest/v1.0/currencies";
     
     try {
@@ -44,15 +93,17 @@ export class ExchangeRate {
         headers: {'accept': 'application/json'}
       }));
 
-      const currencyItem = response.currencies.map(c => ({
-        name: c.name,
-        isoCode: c.isoCode
-      }));
+      this.currencies.set(
+        response.currencies.map(c => ({
+          name: c.name,
+          isoCode: c.isoCode
+        }))
+      )
 
-      console.log(JSON.stringify(currencyItem, null, 4))
-
-    } catch(err) {
+    } catch(err: unknown) {
       console.error(`Errore nel recupero delle valute: ${err}`);
+    } finally {
+      this.isLoading.set(false);
     }
   }
 

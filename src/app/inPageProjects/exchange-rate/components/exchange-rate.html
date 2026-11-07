@@ -1,1 +1,65 @@
-<button (click)="testApiCall()">Prova la chiamata Api vedi la console</button>
+<div class="picker-container">
+    <div 
+        class="picker-trigger" 
+        role="button" 
+        tabindex="0" 
+        (click)="toggleDropdown()"
+        (keydown.enter)="toggleDropdown()"
+        (keydown.space)="$event.preventDefault(); toggleDropdown()"
+    >
+        @if (selectedCurrency(); as current) {
+        <div class="active-badge">
+            <span class="iso">{{ current.isoCode }}</span>
+            <span class="name">{{ current.name }}</span>
+        </div>
+        } @else {
+        <span class="placeholder">Seleziona una valuta...</span>
+        }
+        <span class="chevron" [class.rotated]="isOpen()">▾</span>
+    </div>
+
+    @if (isOpen()) {
+    <div class="dropdown-panel">
+      <div class="search-bar">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <circle cx="11" cy="11" r="8" stroke-width="2"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65" stroke-width="2"/>
+        </svg>
+        <input
+          type="text"
+          placeholder="Cerca per codice o nome (es. JPY, Dollaro...)"
+          [value]="searchQuery()"
+          (input)="onSearch($event)"
+          (click)="$event.stopPropagation()"
+        />
+      </div>
+
+      <div class="results-wrapper">
+        @if (isLoading()) {
+          <div class="status-notice">Caricamento valute...</div>
+        } @else if (filteredCurrencies().length === 0) {
+          <div class="status-notice">Nessuna valuta trovata per "{{ searchQuery() }}"</div>
+        } @else {
+          <ul class="currency-list" role="listbox">
+            @for (item of filteredCurrencies(); track item.isoCode) {
+              <li 
+                class="currency-row" 
+                role="option"
+                tabindex="0"
+                [attr.aria-selected]="item.isoCode === selectedCurrency()?.isoCode"
+                [class.selected]="item.isoCode === selectedCurrency()?.isoCode"
+                (click)="selectCurrency(item)"
+                (keydown.enter)="selectCurrency(item)"
+                (keydown.space)="$event.preventDefault(); selectCurrency(item)"
+              >
+                <span class="row-iso">{{ item.isoCode }}</span>
+                <span class="row-name">{{ item.name }}</span>
+              </li>
+            }
+          </ul>
+        }
+      </div>
+    </div>
+  }
+</div>
+
