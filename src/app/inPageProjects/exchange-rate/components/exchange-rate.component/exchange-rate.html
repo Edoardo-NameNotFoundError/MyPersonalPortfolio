@@ -1,6 +1,6 @@
 <div class="form-container">
 
-    <h2>Valuta di partenza</h2>
+    <h2>{{ ui.titleStart | l}}</h2>
     <app-currency-picker
         [currencies]="currencies()"
         [selectedCurrency]="startCurrency()"
@@ -8,7 +8,7 @@
     >
     </app-currency-picker>
 
-    <h2>Valuta di arrivo</h2>
+    <h2>{{ ui.titleTarget | l }}</h2>
     <app-currency-picker
         [currencies]="currencies()"
         [selectedCurrency]="targetCurrency()"
@@ -26,7 +26,7 @@
     </button>
 
     <div class="input-group date-picker">
-        <label for="exchange-date">Data di Riferimento:</label>
+        <label for="exchange-date">{{ ui.dateLabel | l }}</label>
         <input
             id="exchange-date"
             type="date"
@@ -36,7 +36,7 @@
             class="native-datepicker"
         >
 
-        <label for="input-field">Inserisci il numero da convertire:</label>
+        <label for="input-field">{{ ui.inputLabel | l }}</label>
         <input
             id="input-field"
             type="number"
@@ -51,7 +51,11 @@
             [disabled]="!targetCurrency() || isLoading()"
             (click)="fetchRate()"
         >
-            {{ isLoading() ? 'Ricerca in corso' : 'Calcola' }}
+            @if(isLoading()) {
+                {{ ui.btnLoading | l }}
+            } @else {
+                {{ ui.btnCalc | l }}
+            }
         </button>
 
         <button
@@ -59,19 +63,19 @@
             class="delete-all"
             (click)="clearAllFields()"
         >
-            Cancella tutto
+            {{ ui.btnClear | l }}
         </button>
 
         @if(errorMessage()) {
             <div class="error-alert">
                 {{ errorMessage() }}
             </div>
-        }@else if(appliedRate) {
+        }@else if(formattedAppliedRate()) {
             <div class="result-cart">
-                <p>Tasso di cambio applicato: {{ appliedRate }}</p>
-                <p>Data effettiva del risultato: {{ effectiveDate }}</p>
-                @if(result !== null) {
-                    <p><b>{{ inputNumber() }} {{ startCurrency()?.isoCode }} = {{ result }} {{targetCurrency()?.isoCode}}</b></p>
+                <p>{{ ui.appliedRate | l }} {{ formattedAppliedRate() }}</p>
+                <p>{{ ui.effectiveDate | l }} {{ effectiveDate() }}</p>
+                @if(formattedResult() !== null) {
+                    <p><b>{{ formattedInput() }} {{ startCurrency()?.isoCode }} = {{ formattedResult() }} {{targetCurrency()?.isoCode}}</b></p>
                 }
             </div>
         }

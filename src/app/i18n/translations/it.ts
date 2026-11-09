@@ -21,12 +21,6 @@ export const it = {
         progettiInEvidenza: 'Progetti in evidenza'
     },
 
-    chiSono : {
-        titolo: 'Chi sono',
-        sottotitolo: 'Mario Rossi',
-        descrizione: 'Dopo un percorso di laurea a PincoPallinolandia, ho fatto esperienza...'
-    },
-
     footer: {
         tagline: 'IT & Business Controller · Sviluppatore Full-Stack (Angular, Python, GAS) · Data Strategy',
         codice: 'Codice sorgente del sito',

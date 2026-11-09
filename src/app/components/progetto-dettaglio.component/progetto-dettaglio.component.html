@@ -25,7 +25,14 @@
       [innerHTML]="p.bodyHtml | l">
     </section>
 
+    @if(demoComponent()) {
+      <div class="live-demo-box">
+        <h3>DEMO LIVE!!</h3>
+        <ng-container *ngComponentOutlet="demoComponent()"></ng-container>
+      </div>
+    }
+
   </article>
 } @else {
-  <p>Progetto non trovato.</p>
+  <app-not-found-component></app-not-found-component>
 }

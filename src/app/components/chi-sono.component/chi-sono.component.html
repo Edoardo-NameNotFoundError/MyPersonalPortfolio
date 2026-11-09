@@ -1,3 +1,4 @@
-<h1>{{ 'chiSono.titolo' | t }}</h1>
-<h2>{{ 'chiSono.sottotitolo' | t }}</h2>
-<p> {{ 'chiSono.descrizione' | t}}</p>
+<h1>{{ bio.title | l }}</h1>
+<h2>Abstract</h2>
+<div [innerHTML]="bio.abstract | l"></div>
+<div [innerHTML]="bio.bodyHtml | l"></div>

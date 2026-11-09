@@ -23,6 +23,7 @@ export class ProgettiComponent {
   public router = inject(Router)
 
   selectedSize = signal<FilterSize>('ALL');
+
   showOnlyLive = signal<boolean>(false);
 
   projectsArray = input<Project[]>([...PROJECTS].sort((a,b) => b.priority - a.priority));
@@ -39,7 +40,7 @@ export class ProgettiComponent {
     let filtered = this.projectsArray();
 
     if(this.showOnlyLive()) {
-      filtered = filtered.filter(p => p.liveUrl && p.liveUrl.trim() !== '');
+      filtered = filtered.filter(p => this.hasLiveBadge(p));
     }
 
     if(this.selectedSize() !== 'ALL') {
@@ -48,6 +49,16 @@ export class ProgettiComponent {
 
     return filtered;
   })
+
+  hasLiveBadge(project: Project): boolean {
+    if(!project) return false;
+
+    const hasLiveUrl = !!project.liveUrl?.trim();
+    const hasInPageDemo = !!project?.inPageDemo.trim();
+
+    return hasLiveUrl || hasInPageDemo;
+
+  }
 
   toggleShowLive(event: Event)  {
     const isChecked = event.target as HTMLInputElement;

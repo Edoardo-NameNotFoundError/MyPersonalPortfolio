@@ -23,12 +23,6 @@ export const en: Dictionary = {
         progettiInEvidenza: "Top projects"
     },
 
-    chiSono : {
-        titolo: 'About me',
-        sottotitolo: 'Mario Rossi',
-        descrizione: 'After a degree in Pincopallinolandia, I have experienced...'
-    },
-
     footer: {
         tagline: 'IT & Business Controller · Full-Stack Developer (Angular, Python, GAS) · Data Strategy',
         codice: 'Source code of this site',

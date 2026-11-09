@@ -1,21 +1,28 @@
-import { Component, inject, computed } from '@angular/core';
+import { Component, inject, computed, Type } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 
 import { PROJECTS } from '../../../assets/project.data';
+import { Project } from '../../../models/project.interface';
 
 import { LanguageService } from '../../i18n/language.service';
 import { TPipe } from '../../i18n/t.pipe';
 import { LPipe } from '../../i18n/l.pipe';
 
 import { NotFoundComponent } from '../not-found-component/not-found-component';
+import { ExchangeRate } from '../../inPageProjects/exchange-rate/components/exchange-rate.component/exchange-rate';
+
+const IN_PAGE_DEMO_REGISTRY: Record<string, Type<unknown>> = {
+  'app-exchange-rate': ExchangeRate
+}
 
 
 @Component({
   selector: 'app-progetto-dettaglio.component',
   standalone: true,
-  imports: [RouterModule, NotFoundComponent, TPipe, LPipe],
+  imports: [RouterModule, NotFoundComponent, TPipe, LPipe, CommonModule],
   templateUrl: './progetto-dettaglio.component.html',
   styleUrl: './progetto-dettaglio.component.scss',
 })
@@ -31,4 +38,22 @@ export class ProgettoDettaglioComponent {
     const slug = this.currentSlug();
     return PROJECTS.find(proj => proj.id === slug);
   });
+
+  inPageDemo = computed(() => this.hasInPageDemo(this.project()));
+
+  demoComponent = computed(() => {
+    const demoName = this.inPageDemo();
+    return demoName ? IN_PAGE_DEMO_REGISTRY[demoName] : null;
+  });
+
+  private hasInPageDemo(project: Project | undefined | null): string | null {
+    if(!project) return null;
+    
+    const inPageDemo = project.inPageDemo;
+    
+    if(inPageDemo && inPageDemo.trim() !== '') {
+      return inPageDemo;
+    }
+    return null;
+  }
 }

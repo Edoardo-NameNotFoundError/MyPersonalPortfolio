@@ -4,17 +4,59 @@ const matter = require('gray-matter');
 const { marked } = require('marked');
 
 
-const contentDir = path.join(__dirname, '../content');
-const outputFile = path.join(__dirname, '../src/assets/project.data.ts');
+const contentProjectDir = path.join(__dirname, '../content/Projects');
+const outputProjectFile = path.join(__dirname, '../src/assets/project.data.ts');
+
+const contentBiographyFile = path.join(__dirname, '../content/Biography/chi-sono.md');
+const outputBiographyFile = path.join(__dirname, '../src/assets/biography.data.ts')
+
+function buildBiography() {
+    console.log("Inizio impacchettamento della biografia...");
+    const bioFileRawContent = fs.readFileSync(contentBiographyFile, 'utf-8');
+
+    try {
+        const parsed = matter(bioFileRawContent);
+        const data = parsed.data;
+
+        const [bodyIt, bodyEn] = parsed.content.split("===EN===");
+
+        if(!bodyEn || bodyEn.trim() === '') {
+            throw new Error("Traduzione in inglese assente per la bio!");
+        }
+
+        const biography = {
+            title: {it: data.title_it, en: data.title_en},
+            abstract: {it: data.abstract_it, en: data.abstract_en},
+            bodyHtml: {
+                it: marked.parse(bodyIt.trim()),
+                en: marked.parse(bodyEn.trim())
+            }
+        }
+        
+        const tsContent = [
+            '// File generato automaticamente dallo script build-biography.cjs - NON MODIFICARE A MANO!!',
+            ``,
+            `import { Biography } from '../models/biography.interface'`,
+            '',
+            'export const BIOGRAPHY_DATA: Biography = ' + JSON.stringify(biography, null, 4) + ';'
+        ];
+
+        fs.writeFileSync(outputBiographyFile, tsContent.join('\n'));
+        console.log("✅ Biografia impacchettata con successo!");
+    } catch(err) {
+        throw new Error(`❌ Errore nell'impacchettamento della biografia: ${err.message}`)
+    }
+}
 
 function buildProject() {
-    console.log("Inizio impacchettamento dati dei progetti...")
+    console.log("Inizio impacchettamento dati dei progetti...");
 
-    const files = fs.readdirSync(contentDir).filter(f => f.endsWith('.md'));
+    const files = fs.readdirSync(contentProjectDir).filter(f => f.endsWith('.md'));
+
     const projectsArray = []; 
 
     for (const file of files) {
-        const rawContent = fs.readFileSync(path.join(contentDir, file), 'utf-8');
+        const rawContent = fs.readFileSync(path.join(contentProjectDir, file), 'utf-8');
 
         const parsed = matter(rawContent);
         const data = parsed.data;
@@ -67,7 +109,7 @@ function buildProject() {
     `export const PROJECTS: Project[] = ${finalArrayString};`
     ].join('\n');
 
-    fs.writeFileSync(outputFile, tsContent);
+    fs.writeFileSync(outputProjectFile, tsContent);
 
     const pLength = projectsArray.length;
 
@@ -78,4 +120,5 @@ function buildProject() {
     }
 }
 
+buildBiography();
 buildProject();

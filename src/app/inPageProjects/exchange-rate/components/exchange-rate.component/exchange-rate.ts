@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal} from '@angular/core';
+import { Component, computed, effect, inject, signal} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
@@ -14,24 +14,76 @@ import {
 
 import { CurrencyPickerComponent } from '../currency-picker.component/currency-picker.component';
 
+import { EXCHANGE_RATE_UI } from '../../i18n/exchange-rate.i18n';
+
+import { LanguageService } from '../../../../i18n/language.service';
+import { LPipe } from '../../../../i18n/l.pipe';
+
 
 @Component({
   selector: 'app-exchange-rate',
   standalone: true,
-  imports: [CommonModule, FormsModule, CurrencyPickerComponent],
+  imports: [CommonModule, FormsModule, CurrencyPickerComponent, LPipe],
   templateUrl: './exchange-rate.html',
   styleUrl: './exchange-rate.scss',
 })
 
-export class ExchangeRate implements OnInit {
+export class ExchangeRate {
   private http = inject(HttpClient);
+  protected readonly i18n = inject(LanguageService);
+  public ui = EXCHANGE_RATE_UI;
+
+  constructor() {
+    effect(() => {
+      const lang = this.i18n.lang();
+      this.getAllCurrencies(lang);
+    })
+  }
 
   today = new Date().toISOString().split('T')[0];
 
-  result : number | null = null;
-  appliedRate : number | null = null;
+  private numberFormatter = computed(() => {
+    const locale = this.i18n.lang() === 'it' ? 'it-IT' : 'en-US';
+    return new Intl.NumberFormat(locale, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  });
+
+  inputNumber = signal<number | null>(null);
+  formattedInput = computed(() =>{
+    const val = this.inputNumber();
+    return val === null ? null : this.numberFormatter().format(val);
+  });
+
+  rawResult = signal<number | null>(null);
+  formattedResult = computed(() => {
+    const val = this.rawResult();
+    return val === null ? null : this.numberFormatter().format(val);
+  });
+
+  rawAppliedRate = signal<number | null>(null);
+  formattedAppliedRate = computed(() =>{
+    const val = this.rawAppliedRate();
+    if(val === null) return null;
+
+    const locale = this.i18n.lang() === 'it' ? 'it-IT' : 'en-US';
+    return new Intl.NumberFormat(locale, {
+      minimumFractionDigits: 5,
+      maximumFractionDigits: 5
+    }).format(val);
+  });
   
-  effectiveDate: string | null = null;
+  rawEffectiveDate = signal<Date | null>(null);
+  effectiveDate = computed(() => {
+    const date = this.rawEffectiveDate();
+    if(!date) return;
+
+    const locale = this.i18n.lang() === 'it' ? 'it-IT' : 'en-US';
+    return date.toLocaleDateString(locale, {
+      day: '2-digit', month: '2-digit', year: 'numeric' 
+    });
+  });
 
   isLoading = signal<boolean>(false);
   
@@ -41,12 +93,6 @@ export class ExchangeRate implements OnInit {
   currencies = signal<CurrencyItem[]>([]);
   startCurrency = signal<CurrencyItem | null>(null);
   targetCurrency = signal<CurrencyItem | null>(null);
-
-  inputNumber = signal<number | null>(null);
-
-  ngOnInit(): void {
-    this.getAllCurrencies();
-  }
 
   onCurrencySelected(item: CurrencyItem, fieldName: 'start' | 'target'): void {
     switch(fieldName) {
@@ -70,9 +116,9 @@ export class ExchangeRate implements OnInit {
   }
 
   resetOutputValues(): void {
-    this.result = null;
-    this.appliedRate = null;
-    this.effectiveDate = null;
+    this.rawResult.set(null);
+    this.rawAppliedRate.set(null);
+    this.rawEffectiveDate.set(null);
   }
 
   clearAllFields(): void {
@@ -96,12 +142,13 @@ export class ExchangeRate implements OnInit {
     const amount = numberInput ? parseFloat(numberInput) : null;
 
     this.inputNumber.set(amount);
-    
-    if(this.appliedRate) {
+
+    const rate = this.rawAppliedRate();
+    if(rate) {
       if(amount) {
-        this.result = Math.round((amount * this.appliedRate)*100)/100
+        this.rawResult.set(Math.round((amount * rate * 10000) / 10000));
       } else {
-        this.result = null;
+        this.rawResult.set(null);
       }
     }
   }
@@ -117,9 +164,10 @@ export class ExchangeRate implements OnInit {
     const startCurr = this.startCurrency();
     const targetCurr = this.targetCurrency();
     const amount = this.inputNumber();
+    const currentLang = this.i18n.lang();
 
     if (!startCurr || !targetCurr || !amount) {
-      this.errorMessage.set("Compila tutti i campi (Importo, Valuta di partenza e arrivo)!");
+      this.errorMessage.set(this.ui.errMissingFields[currentLang]);
       return;
     }
 
@@ -132,27 +180,26 @@ export class ExchangeRate implements OnInit {
       const targetRate = targetCurr.isoCode === 'EUR' ? 1 : ratesArray.find(r => r.isoCode === targetCurr.isoCode)?.avgRate;
 
       if (startRate && targetRate) {
-        this.appliedRate = Math.round((targetRate / startRate) * 10000) / 10000;
+        this.rawAppliedRate.set(Math.round((targetRate / startRate) * 10000) / 10000);
         
         const dateObject = new Date(ratesArray[0].referenceDate);
-        this.effectiveDate = dateObject.toLocaleDateString('it-IT', {
-          day: 'numeric', month: 'numeric', year: 'numeric'
-        });
+        this.rawEffectiveDate.set(dateObject);
 
-        this.result = this.calculateCrossRate(amount, startRate, targetRate);
+        this.rawResult.set(this.calculateCrossRate(amount, startRate, targetRate));
       } else {
-        this.errorMessage.set(`Dati non disponibili per ${startCurr.isoCode} o ${targetCurr.isoCode} in questa data.`);
+        this.errorMessage.set(this.ui.errNoData[currentLang]);
       }
     }
     
     this.isLoading.set(false);
   }
   
-  private async getAllCurrencies(): Promise<void>{
+  private async getAllCurrencies(lang: 'it' | 'en'): Promise<void>{
     this.errorMessage.set('');
     this.isLoading.set(true);
-
-    const url = "https://tassidicambio.bancaditalia.it/terzevalute-wf-web/rest/v1.0/currencies";
+    
+    const url = `https://tassidicambio.bancaditalia.it/terzevalute-wf-web/rest/v1.0/currencies?lang=${lang}`;
+    
     
     try {
       const response = await firstValueFrom(this.http.get<ApiCurrencyResponse>(url, {
@@ -167,7 +214,7 @@ export class ExchangeRate implements OnInit {
       )
 
     } catch(err: unknown) {
-      this.errorMessage.set(`Errore nel recupero delle valute: ${err}`);
+      this.errorMessage.set(`${this.ui.errFetchCurrencies[lang]}: ${err}`);
     } finally {
       this.isLoading.set(false);
     }
@@ -178,6 +225,7 @@ export class ExchangeRate implements OnInit {
 
     const startIso = this.startCurrency()?.isoCode;
     const targetIso = this.targetCurrency()?.isoCode;
+    const currentLang = this.i18n.lang();
 
     if(startIso && targetIso && startIso === targetIso) {
       return [{
@@ -207,11 +255,12 @@ export class ExchangeRate implements OnInit {
       } catch (err: unknown) {
         if (err instanceof HttpErrorResponse) {
           if (err.status !== 400 && err.status !== 404) {
-            this.errorMessage.set(`Errore API (${err.status}): riprova più tardi...`);
+            this.errorMessage.set(`${this.ui.errApi[currentLang]} (${err.status})`);
             return null;
           }
         } else if (err instanceof Error) {
-          this.errorMessage.set(`Errore JS: ${err.message}`);
+          const errorMsg = this.ui.errNoRates[currentLang].replace('{days}', maxDaysBack.toString());
+          this.errorMessage.set(errorMsg);
         }
       }
 
