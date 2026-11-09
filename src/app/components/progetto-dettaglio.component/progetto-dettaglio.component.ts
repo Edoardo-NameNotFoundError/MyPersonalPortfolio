@@ -1,4 +1,4 @@
-import { Component, inject, computed, Type } from '@angular/core';
+import { Component, inject, computed, Type, signal, effect } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -12,10 +12,11 @@ import { TPipe } from '../../i18n/t.pipe';
 import { LPipe } from '../../i18n/l.pipe';
 
 import { NotFoundComponent } from '../not-found-component/not-found-component';
-import { ExchangeRate } from '../../inPageProjects/exchange-rate/components/exchange-rate.component/exchange-rate';
 
-const IN_PAGE_DEMO_REGISTRY: Record<string, Type<unknown>> = {
-  'app-exchange-rate': ExchangeRate
+const IN_PAGE_DEMO_REGISTRY: Record<string, () => Promise<Type<unknown>>> = {
+  'app-exchange-rate': () => import(
+    '../../inPageProjects/exchange-rate/components/exchange-rate.component/exchange-rate'
+  ).then(m => m.ExchangeRate)
 }
 
 
@@ -41,11 +42,21 @@ export class ProgettoDettaglioComponent {
 
   inPageDemo = computed(() => this.hasInPageDemo(this.project()));
 
-  demoComponent = computed(() => {
-    const demoName = this.inPageDemo();
-    return demoName ? IN_PAGE_DEMO_REGISTRY[demoName] : null;
-  });
+  demoComponent = signal<Type<unknown> | null>(null);
+  constructor() {
+    effect(() => {
+      const demoName = this.inPageDemo();
 
+      if (demoName && IN_PAGE_DEMO_REGISTRY[demoName]) {
+        IN_PAGE_DEMO_REGISTRY[demoName]().then(compClass => {
+          this.demoComponent.set(compClass);
+        });
+      } else {
+        this.demoComponent.set(null);
+      }
+    });
+  }
+  
   private hasInPageDemo(project: Project | undefined | null): string | null {
     if(!project) return null;
     

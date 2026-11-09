@@ -7,12 +7,10 @@ import { LanguageService } from '../../i18n/language.service';
 
 import { ProgettiComponent } from '../progetti-component/progetti-component';
 
-//Da rimuovere quando finiti i TEST preliminari
-import { ExchangeRate } from '../../inPageProjects/exchange-rate/components/exchange-rate.component/exchange-rate';
 
 @Component({
   selector: 'app-home-component',
-  imports: [TPipe, ProgettiComponent, ExchangeRate], //Da rimuovere quando finiti i TEST preliminari!!
+  imports: [TPipe, ProgettiComponent], 
   templateUrl: './home-component.html',
   styleUrl: './home-component.scss',
 })
