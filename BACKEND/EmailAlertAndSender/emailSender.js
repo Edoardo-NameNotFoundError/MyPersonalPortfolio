@@ -1,3 +1,11 @@
+// ==========================================
+// EmailSenderBackend.gs - Google Apps Script
+// ==========================================
+// Motore di notifica e invio mail
+// 1. Invia una mail per informare della richiesta di ottenimento CV
+// 2. Prepara già un template di bozza da inviare direttamente al recruiter
+// L'operazione di invio è gestita manualmente per un check personale e per controllo umano
+
 function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);

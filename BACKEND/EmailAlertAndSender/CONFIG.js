@@ -1,5 +1,5 @@
 // ==========================================
-// CONFIG.gs - Google Apps Script Configuration
+// CONFIG.js - Google Apps Script Configuration
 // ==========================================
 // Questo file gestisce le variabili d'ambiente per il backend GAS.
 
@@ -7,10 +7,10 @@ const IS_PRODUCTION = false;
 
 const DATA = {
   test: {
-    // Dati fittizi per test locali o sviluppo.
-    cvIdFileOnDrive: PropertiesService.getScriptProperties('TEST_CV_FILE_ID'),
+    // Dati fittizi per test locali o sviluppo. Nessun dato reale qui!
+    cvIdFileOnDrive: 'ID_DI_PROVA_SU_DRIVE',
     email: {
-      adminEmail: 'test.recruiter@example.com',
+      adminEmail: Session.getEffectiveUser().getEmail(),
       toRecruiter: {
         subject: HtmlParser.createHtmlOutputFromFile('RecuiterSubject_Test').getContent(),
         htmlBody: HtmlService.createHtmlOutputFromFile('RecruiterMail_Test').getContent()
