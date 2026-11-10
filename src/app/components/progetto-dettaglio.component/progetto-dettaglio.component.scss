@@ -1,0 +1,357 @@
+:host {
+  display: block;
+}
+
+.project-detail-page {
+  width: 100%;
+  max-width: 52rem; // misura di lettura comoda (~70 caratteri per riga)
+  margin-inline: auto;
+  padding: var(--space-5) var(--space-3) var(--space-6);
+}
+
+// ---------- Header ----------
+.detail-header {
+  display: grid;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+
+  h1 {
+    margin: 0;
+    font-size: clamp(1.75rem, 5vw + 0.5rem, 2.75rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--color-accent);
+  }
+}
+
+.meta-info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+
+.badge {
+  display: inline-flex;
+  padding: 0.25rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+}
+
+.live-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 2.25rem;
+  padding: 0 0.875rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--color-accent);
+  background: var(--color-accent-soft);
+  border: 1px solid rgb(52 211 153 / 30%);
+  border-radius: 999px;
+  transition: background var(--transition), color var(--transition);
+
+  &::before {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: currentColor;
+    animation: live-pulse 2s ease-out infinite;
+  }
+
+  &:hover {
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+}
+
+@keyframes live-pulse {
+  0% { box-shadow: 0 0 0 0 rgb(52 211 153 / 55%); }
+  70% { box-shadow: 0 0 0 0.5rem rgb(52 211 153 / 0%); }
+  100% { box-shadow: 0 0 0 0 rgb(52 211 153 / 0%); }
+}
+
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.tech-tag {
+  padding: 0.2rem 0.625rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+// ---------- Markdown (anti wall of text) ----------
+.markdown-body {
+  font-size: 1.0625rem;
+  line-height: 1.85;
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+
+  ::ng-deep {
+    // Il primo elemento non deve avere margine superiore
+    > :first-child { margin-top: 0; }
+    > :last-child { margin-bottom: 0; }
+
+    // Titoli
+    h1, h2, h3, h4 {
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      scroll-margin-top: calc(var(--nav-height) + var(--space-3));
+    }
+
+    h1 {
+      margin: var(--space-6) 0 var(--space-3);
+      font-size: clamp(1.625rem, 3vw + 1rem, 2.125rem);
+      color: var(--color-accent);
+    }
+
+    h2 {
+      margin: var(--space-5) 0 var(--space-3);
+      padding-bottom: var(--space-2);
+      font-size: clamp(1.375rem, 2vw + 0.875rem, 1.75rem);
+      color: var(--color-accent);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    h3 {
+      margin: var(--space-5) 0 var(--space-2);
+      font-size: 1.25rem;
+      color: var(--color-text);
+    }
+
+    h4 {
+      margin: var(--space-4) 0 var(--space-2);
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+
+    // Paragrafi: margini generosi per respirare
+    p {
+      margin: 0 0 var(--space-4);
+      color: var(--color-text);
+    }
+
+    strong {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    em {
+      color: var(--color-text);
+    }
+
+    // Link
+    a {
+      color: var(--color-accent);
+      text-decoration: underline;
+      text-decoration-color: rgb(52 211 153 / 40%);
+      text-underline-offset: 0.2em;
+      transition: text-decoration-color var(--transition), color var(--transition);
+
+      &:hover {
+        color: var(--color-accent-strong);
+        text-decoration-color: currentColor;
+      }
+    }
+
+    // Liste: segnaposto in accento
+    ul, ol {
+      margin: 0 0 var(--space-4);
+      padding-left: var(--space-4);
+    }
+
+    ul {
+      list-style: none;
+
+      > li {
+        position: relative;
+
+        &::before {
+          content: '';
+          position: absolute;
+          left: calc(var(--space-4) * -1 + 0.15rem);
+          top: 0.8em;
+          width: 0.4rem;
+          height: 0.4rem;
+          border-radius: 2px;
+          background: var(--color-accent);
+        }
+      }
+    }
+
+    ol {
+      > li::marker {
+        font-family: var(--font-mono);
+        font-weight: 600;
+        color: var(--color-accent);
+      }
+    }
+
+    li {
+      margin-bottom: var(--space-2);
+      padding-left: var(--space-1);
+
+      > p { margin-bottom: var(--space-2); }
+      > ul, > ol { margin: var(--space-2) 0 0; }
+    }
+
+    // Citazioni
+    blockquote {
+      margin: var(--space-4) 0;
+      padding: var(--space-3) var(--space-4);
+      font-style: italic;
+      color: var(--color-text-muted);
+      background: var(--color-accent-soft);
+      border-left: 3px solid var(--color-accent);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+
+      > :last-child { margin-bottom: 0; }
+    }
+
+    // Codice inline
+    code {
+      padding: 0.15em 0.45em;
+      font-family: var(--font-mono);
+      font-size: 0.875em;
+      color: var(--color-accent);
+      background: var(--color-surface-2);
+      border: 1px solid var(--color-border);
+      border-radius: 0.375rem;
+      overflow-wrap: anywhere;
+    }
+
+    // Blocchi di codice
+    pre {
+      margin: var(--space-4) 0;
+      padding: var(--space-3) var(--space-4);
+      overflow-x: auto;
+      font-size: 0.875rem;
+      line-height: 1.7;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      -webkit-overflow-scrolling: touch;
+
+      code {
+        padding: 0;
+        color: var(--color-text);
+        background: none;
+        border: 0;
+        overflow-wrap: normal;
+        white-space: pre;
+      }
+    }
+
+    // Immagini
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: var(--space-4) auto;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+    }
+
+    // Tabelle (scorrono in orizzontale su mobile)
+    table {
+      display: block;
+      width: 100%;
+      margin: var(--space-4) 0;
+      overflow-x: auto;
+      border-collapse: collapse;
+      font-size: 0.9375rem;
+    }
+
+    th, td {
+      padding: 0.625rem var(--space-3);
+      text-align: left;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    th {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      background: var(--color-surface);
+    }
+
+    hr {
+      margin: var(--space-5) 0;
+      border: 0;
+      border-top: 1px solid var(--color-border);
+    }
+  }
+}
+
+// ---------- Demo live ----------
+.live-demo-box {
+  margin-top: var(--space-6);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+
+  h3 {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0 0 var(--space-4);
+    padding-bottom: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    border-bottom: 1px solid var(--color-border);
+
+    &::before {
+      content: '';
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background: var(--color-accent);
+      animation: live-pulse 2s ease-out infinite;
+    }
+  }
+}
+
+// ---------- Tablet / desktop ----------
+@media (min-width: 48rem) {
+  .project-detail-page {
+    padding: var(--space-6) var(--space-4) calc(var(--space-6) * 1.5);
+  }
+
+  .markdown-body {
+    font-size: 1.125rem;
+  }
+
+  .live-demo-box {
+    padding: var(--space-5);
+  }
+}

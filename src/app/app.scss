@@ -1,0 +1,25 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+}
+
+// Spazio per il selettore lingua fisso in alto (sempre presente)
+.page {
+  padding-top: 3.75rem;
+}
+
+// Mobile: la navbar è in basso. Se non c'è il footer (che ha già il suo spazio), lo aggiungiamo qui
+.page--with-nav.page--no-footer {
+  padding-bottom: calc(var(--nav-height) + env(safe-area-inset-bottom));
+}
+
+// Desktop: la navbar è in alto
+@media (min-width: 48rem) {
+  .page--with-nav {
+    padding-top: var(--nav-height);
+  }
+
+  .page--with-nav.page--no-footer {
+    padding-bottom: 0;
+  }
+}

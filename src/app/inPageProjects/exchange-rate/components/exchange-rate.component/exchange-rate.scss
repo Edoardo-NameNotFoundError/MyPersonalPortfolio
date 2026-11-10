@@ -1,0 +1,215 @@
+:host {
+  display: block;
+}
+
+.form-container {
+  display: grid;
+  gap: var(--space-2);
+  width: 100%;
+  max-width: 36rem;
+  margin-inline: auto;
+
+  // I due h2 fanno da etichetta ai selettori valuta
+  h2 {
+    margin: var(--space-2) 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+}
+
+// ---------- Pulsante inversione ----------
+#swap-button {
+  justify-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: var(--space-2) 0;
+  font-size: 1.125rem;
+  line-height: 1;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: border-color var(--transition), background var(--transition),
+    transform 300ms ease;
+
+  &:hover {
+    background: var(--color-accent-soft);
+    border-color: var(--color-accent);
+    transform: rotate(180deg);
+  }
+
+  &:active {
+    transform: rotate(180deg) scale(0.94);
+  }
+}
+
+// ---------- Campi ----------
+.input-group {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2);
+
+  // Tutto occupa l'intera riga, tranne i due bottoni d'azione
+  > :not(button) {
+    grid-column: 1 / -1;
+  }
+
+  label {
+    margin-top: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  input {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0 var(--space-3);
+    font: inherit;
+    font-size: 1rem; // evita lo zoom su iOS
+    color: var(--color-text);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    transition: border-color var(--transition);
+
+    &:hover {
+      border-color: var(--color-text-muted);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-accent);
+      box-shadow: var(--ring);
+    }
+  }
+
+  input[type='number'] {
+    font-family: var(--font-mono);
+    appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      appearance: none;
+      margin: 0;
+    }
+  }
+
+  // Icona calendario nativa visibile sul tema scuro
+  input[type='date']::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    filter: invert(0.8) sepia(1) saturate(4) hue-rotate(95deg);
+  }
+}
+
+// ---------- Bottoni ----------
+.calc-button,
+.delete-all {
+  min-height: 3rem;
+  padding: 0 var(--space-4);
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition),
+    color var(--transition), transform var(--transition);
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+}
+
+.calc-button {
+  margin-top: var(--space-3);
+  color: var(--color-on-accent);
+  background: var(--color-accent);
+  border: 1px solid var(--color-accent);
+
+  &:hover:not(:disabled) {
+    background: var(--color-accent-strong);
+    border-color: var(--color-accent-strong);
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+.delete-all {
+  color: var(--color-text-muted);
+  background: transparent;
+  border: 1px solid var(--color-border);
+
+  &:hover {
+    color: var(--color-text);
+    border-color: var(--color-text-muted);
+  }
+}
+
+// ---------- Errore ----------
+.error-alert {
+  margin-top: var(--space-3);
+  padding: var(--space-3);
+  font-size: 0.9375rem;
+  color: #fda4af;
+  background: rgb(251 113 133 / 10%);
+  border: 1px solid rgb(251 113 133 / 35%);
+  border-left-width: 3px;
+  border-radius: var(--radius-sm);
+}
+
+// ---------- Risultato ----------
+.result-cart {
+  margin-top: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-accent);
+  border-radius: var(--radius-sm);
+
+  p {
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+
+    &:last-child {
+      margin: var(--space-3) 0 0;
+      padding-top: var(--space-3);
+      font-size: clamp(1rem, 3vw + 0.5rem, 1.25rem);
+      color: var(--color-text);
+      border-top: 1px solid var(--color-border);
+    }
+  }
+
+  b {
+    font-weight: 600;
+    color: var(--color-accent);
+    overflow-wrap: anywhere;
+  }
+}
+
+// ---------- Da tablet in su: i due bottoni affiancati ----------
+@media (min-width: 40rem) {
+  .input-group {
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .calc-button,
+  .delete-all {
+    margin-top: var(--space-3);
+  }
+}

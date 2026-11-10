@@ -1,13 +1,88 @@
-/* src/styles.scss */
-
 html, body {
   margin: 0;
   padding: 0;
   width: 100%;
   min-height: 100vh;
 }
-
-/* Questa è una best practice assoluta per evitare che bordi e padding sbordino */
 *, *::before, *::after {
   box-sizing: border-box;
+}
+
+:root {
+  // Superfici (slate/charcoal morbidi, mai nero assoluto)
+  --color-bg: #0f1720;
+  --color-surface: #162030;
+  --color-surface-2: #1c2a3c;
+  --color-border: #2a384c;
+
+  // Testo
+  --color-text: #e6edf5;
+  --color-text-muted: #94a3b8;
+
+  // Accento (smeraldo/menta). Per il blu/ciano: #38bdf8 / #0ea5e9
+  --color-accent: #34d399;
+  --color-accent-strong: #10b981;
+  --color-accent-soft: rgb(52 211 153 / 12%);
+  --color-on-accent: #06281e;
+
+  // Tipografia
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  // Spaziature, raggi, ombre
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2.5rem;
+  --space-6: 4rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.25rem;
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 25%);
+  --shadow-md: 0 8px 24px rgb(0 0 0 / 28%);
+  --ring: 0 0 0 3px rgb(52 211 153 / 35%);
+
+  // Layout
+  --container: 72rem;
+  --nav-height: 4rem;
+  --transition: 160ms ease;
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; animation: none !important; }
 }

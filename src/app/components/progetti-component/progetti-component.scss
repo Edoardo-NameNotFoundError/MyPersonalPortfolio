@@ -1,45 +1,303 @@
-$live-color: #ef4444; 
-
-.live-indicator {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.35rem 0.85rem 0.35rem 0.5rem;
-  
-  background-color: rgba($live-color, 0.1);
-  border: 1px solid rgba($live-color, 0.2);
-  border-radius: 9999px;
-  
-  font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: lighten($live-color, 15%);
+:host {
+  display: block;
 }
 
-.live-dot {
-  position: relative;
-  display: block;
-  width: 10px;
-  height: 10px;
-  background-color: $live-color;
-  border-radius: 50%;
-  box-shadow: 0 0 8px rgba($live-color, 0.6);
+// ---------- Griglia (mobile first: 1 colonna) ----------
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+}
 
-  // L'onda radar
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0; 
-    border-radius: inherit;
-    background-color: inherit;
-    z-index: -1;
-    animation: modern-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+// ---------- Filtri ----------
+.filter-class {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+
+  // Checkbox custom (appearance: none + segno di spunta in CSS)
+  input[type='checkbox'] {
+    appearance: none;
+    flex: 0 0 auto;
+    position: relative;
+    width: 1.375rem;
+    height: 1.375rem;
+    margin: 0;
+    background: var(--color-bg);
+    border: 1.5px solid var(--color-border);
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: background var(--transition), border-color var(--transition);
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0.4rem;
+      top: 0.15rem;
+      width: 0.375rem;
+      height: 0.7rem;
+      border: solid var(--color-on-accent);
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg) scale(0);
+      transition: transform var(--transition);
+    }
+
+    &:hover {
+      border-color: var(--color-accent);
+    }
+
+    &:checked {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+
+      &::after {
+        transform: rotate(45deg) scale(1);
+      }
+    }
+  }
+
+  > label {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    min-height: 2.75rem; // target touch comodo
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    cursor: pointer;
   }
 }
 
-@keyframes modern-ping {
-  75%, 100% {
-    transform: scale(2.8);
-    opacity: 0;
+.size-filter {
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+
+  label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+}
+
+.filter-select {
+  appearance: none;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0 2.5rem 0 var(--space-3);
+  font: inherit;
+  font-size: 1rem; // 16px: evita lo zoom automatico su iOS
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2334d399' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.125rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color var(--transition);
+
+  &:hover {
+    border-color: var(--color-accent);
+  }
+}
+
+// ---------- Card progetto ----------
+.project-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--transition), transform var(--transition),
+    box-shadow var(--transition);
+
+  &:hover,
+  &:focus-within {
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--color-text);
+  }
+
+  .content {
+    flex: 1 1 auto; // spinge tech-stack e bottone sempre in fondo alla card
+    width: 100%;
+
+    h3 {
+      margin: 0 0 var(--space-2);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+
+    p {
+      display: -webkit-box;
+      margin: 0;
+      overflow: hidden;
+      font-size: 0.9375rem;
+      line-height: 1.75;
+      color: var(--color-text-muted);
+      -webkit-line-clamp: 5; // card di altezza omogenea; rimuovi se vuoi l'abstract intero
+      -webkit-box-orient: vertical;
+    }
+  }
+}
+
+// ---------- Badge "demo live" ----------
+.live-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.25rem 0.75rem;
+  background: var(--color-accent-soft);
+  border: 1px solid rgb(52 211 153 / 30%);
+  border-radius: 999px;
+
+  .live-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--color-accent);
+    animation: live-pulse 2s ease-out infinite;
+  }
+
+  .live-text {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--color-accent);
+  }
+}
+
+@keyframes live-pulse {
+  0% { box-shadow: 0 0 0 0 rgb(52 211 153 / 55%); }
+  70% { box-shadow: 0 0 0 0.5rem rgb(52 211 153 / 0%); }
+  100% { box-shadow: 0 0 0 0 rgb(52 211 153 / 0%); }
+}
+
+// ---------- Badge dimensione e tag tecnologie ----------
+.badge-size {
+  display: inline-flex;
+  padding: 0.25rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+}
+
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.tech-tag {
+  padding: 0.2rem 0.625rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+// ---------- Bottone dettagli ----------
+.detail-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0 var(--space-4);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--color-on-accent);
+  background: var(--color-accent);
+  border-radius: var(--radius-sm);
+  transition: background var(--transition), transform var(--transition);
+
+  &:hover {
+    background: var(--color-accent-strong);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+// ---------- Stato vuoto ----------
+.projects-grid > p {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: var(--space-5) var(--space-3);
+  text-align: center;
+  color: var(--color-text-muted);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+// ---------- Tablet: 2 colonne, filtri su una riga ----------
+@media (min-width: 40rem) {
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .size-filter {
+    flex: 0 0 auto;
+    flex-direction: row;
+    align-items: center;
+    margin-left: auto;
+
+    .filter-select {
+      width: auto;
+      min-width: 9rem;
+    }
+  }
+
+  .detail-btn {
+    width: auto;
+  }
+}
+
+// ---------- Desktop: 3 colonne ----------
+@media (min-width: 64rem) {
+  .projects-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .project-card {
+    padding: var(--space-4) calc(var(--space-4) + 0.25rem);
   }
 }
