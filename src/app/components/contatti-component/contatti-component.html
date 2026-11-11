@@ -1,1 +1,95 @@
-<p>contatti-component works!</p>
+<section class="contact-section">
+  <div class="contact-card">
+    
+    <header class="contact-header">
+      <h2>Richiedi il mio CV</h2>
+      <p>Compila il modulo per ricevere istantaneamente il mio curriculum aggiornato all'indirizzo indicato.</p>
+    </header>
+
+    <form [formGroup]="contactForm" (ngSubmit)="sendRequest()" class="contact-form">
+      
+      <!-- CAMPO NOME -->
+      <div class="form-field">
+        <label for="req-name">Nome completo <span class="required">*</span></label>
+        <input 
+          id="req-name" 
+          type="text" 
+          formControlName="name" 
+          placeholder="Es. Mario Rossi"
+          [class.is-invalid]="f['name'].invalid && (f['name'].dirty || f['name'].touched)">
+        
+        <!-- Errori Nome -->
+        @if (f['name'].invalid && (f['name'].dirty || f['name'].touched)) {
+          <div class="field-errors" role="alert">
+            @if (f['name'].errors?.['required']) { <span>Il nome è obbligatorio.</span> }
+            @if (f['name'].errors?.['minlength']) { <span>Inserisci almeno 4 caratteri.</span> }
+          </div>
+        }
+      </div>
+
+      <!-- CAMPO EMAIL -->
+      <div class="form-field">
+        <label for="req-email">Email lavorativa <span class="required">*</span></label>
+        <input 
+          id="req-email" 
+          type="email" 
+          formControlName="email" 
+          placeholder="mario.rossi@azienda.com"
+          [class.is-invalid]="f['email'].invalid && (f['email'].dirty || f['email'].touched)">
+        
+        <!-- Errori Email -->
+        @if (f['email'].invalid && (f['email'].dirty || f['email'].touched)) {
+          <div class="field-errors" role="alert">
+            @if (f['email'].errors?.['required']) { <span>L'email è obbligatoria.</span> }
+            @if (f['email'].errors?.['email']) { <span>Formato email non valido.</span> }
+          </div>
+        }
+      </div>
+
+      <!-- CAMPO NOTE AGGIUNTIVE -->
+      <div class="form-field">
+        <label for="req-notes">Note aggiuntive <span class="optional">(opzionale)</span></label>
+        <textarea 
+          id="req-notes" 
+          formControlName="additionalNotes" 
+          rows="3" 
+          placeholder="Eventuali dettagli o il contesto della richiesta...">
+        </textarea>
+      </div>
+
+      <!-- AZIONI / BOTTONE INVIO -->
+      <div class="form-actions">
+        <button 
+          type="submit" 
+          class="btn-submit" 
+          [disabled]="contactForm.invalid || isLoading()">
+          
+          @if (isLoading()) {
+            <span class="spinner-icon" aria-hidden="true">⏳</span> Invio in corso...
+          } @else {
+            <span class="send-icon" aria-hidden="true">✉️</span> Invia Richiesta
+          }
+        </button>
+      </div>
+
+    </form>
+
+    <!-- FEEDBACK DI RETE -->
+    <div class="feedback-area" aria-live="polite">
+      @if (successMessage()) {
+        <div class="alert alert-success">
+          <strong>Operazione completata!</strong>
+          <p>{{ successMessage() }}</p>
+        </div>
+      }
+      
+      @if (errorMessage()) {
+        <div class="alert alert-error">
+          <strong>Attenzione:</strong>
+          <p>{{ errorMessage() }}</p>
+        </div>
+      }
+    </div>
+
+  </div>
+</section>

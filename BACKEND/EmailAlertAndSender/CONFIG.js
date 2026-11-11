@@ -8,15 +8,15 @@ const IS_PRODUCTION = false;
 const DATA = {
   test: {
     // Dati fittizi per test locali o sviluppo. Nessun dato reale qui!
-    cvIdFileOnDrive: 'ID_DI_PROVA_SU_DRIVE',
+    cvIdFileOnDrive: 'ID-DI-PROVA-DRIVE',
     email: {
       adminEmail: Session.getEffectiveUser().getEmail(),
       toRecruiter: {
-        subject: HtmlParser.createHtmlOutputFromFile('RecuiterSubject_Test').getContent(),
+        subject: '[TEST] Il mio Curriculum Vitae - {{requesterName}}',
         htmlBody: HtmlService.createHtmlOutputFromFile('RecruiterMail_Test').getContent()
       },
       toMe: {
-        subject: '[TEST] Nuova richiesta CV',
+        subject: '[TEST] Nuova richiesta CV da parte di {{requesterName}}',
         htmlBody: '<p>Test da {{requesterEmail}}</p>'
       }
     }
@@ -29,7 +29,7 @@ const DATA = {
       adminEmail: Session.getEffectiveUser().getEmail(),
       
       toRecruiter: {
-        subject: HtmlParser.createHtmlOutputFromFile('RecruiterSubject').getContent(),
+        subject: 'Il mio Curriculum Vitae - XXX-YYY',
         htmlBody: HtmlService.createHtmlOutputFromFile('RecruiterMail').getContent()
       },
       
