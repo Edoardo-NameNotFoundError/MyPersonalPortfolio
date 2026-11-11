@@ -49,7 +49,10 @@ jobs:
       # --- SEZIONE BUILD E DEPLOY ---
 
       - name: Build project
-        run: npm run build
+        run: npm run build -- --base-href /MyPersonalPortfolio/
+
+      - name: Fix Angular Routing (Crea 404.html)
+        run: cp ./dist/MyPersonalPortfolioApp/browser/index.html ./dist/MyPersonalPortfolioApp/browser/404.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
