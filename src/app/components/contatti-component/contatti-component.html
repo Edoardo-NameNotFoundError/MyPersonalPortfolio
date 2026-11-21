@@ -57,7 +57,7 @@
         </textarea>
       </div>
 
-      <!-- AZIONI / BOTTONE INVIO -->
+      <!-- AZIONI / BOTTONE INVIO / LOADING SCREEN -->
       <div class="form-actions">
         <button 
           type="submit" 
@@ -65,7 +65,7 @@
           [disabled]="contactForm.invalid || isLoading()">
           
           @if (isLoading()) {
-            <span class="spinner-icon" aria-hidden="true">⏳</span> Invio in corso...
+            <app-loading-component message="Invio mail in corso..."></app-loading-component>
           } @else {
             <span class="send-icon" aria-hidden="true">✉️</span> Invia Richiesta
           }

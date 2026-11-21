@@ -1,0 +1,76 @@
+// ==========================================
+// LOADER
+// ==========================================
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-5);
+  
+  background-color: rgba(15, 23, 32, 0.85);
+  backdrop-filter: blur(4px); 
+
+  .loading-container {
+    display: flex;
+    gap: var(--space-1);
+    width: 4rem;
+    height: 2rem;
+  }
+
+  .loader {
+    flex: 1;
+    height: 100%;
+    background: var(--color-border);
+    border-radius: var(--space-1);
+    transform: scaleY(0.1);
+    animation: loading 0.5s ease-in-out infinite alternate;
+
+    &.L-1 { animation-delay: 0.1s; }
+    &.L-2 { animation-delay: 0.2s; }
+    &.L-3 { animation-delay: 0.3s; }
+    &.L-4 { animation-delay: 0.4s; }
+  }
+
+  p {
+    margin: 0;
+    font-size: 1rem;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    text-align: center;
+    color: var(--color-text-muted);
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+}
+
+@keyframes loading {
+  0% {
+    opacity: 0.3;
+    transform: scaleY(0.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleY(1.5);
+    background: var(--color-accent);
+    box-shadow: 0 0 8px var(--color-accent-soft); 
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-screen .loader,
+  .loading-screen p {
+    animation: none;
+    transform: none;
+  }
+}

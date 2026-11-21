@@ -2,10 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
+import { LoadingComponent } from '../loading-component/loading-component';
 
 @Component({
   selector: 'app-contatti-component',
-  imports: [ReactiveFormsModule], 
+  imports: [ReactiveFormsModule, LoadingComponent], 
   templateUrl: './contatti-component.html',
   styleUrl: './contatti-component.scss',
 })
